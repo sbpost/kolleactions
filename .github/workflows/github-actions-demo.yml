@@ -1,10 +1,22 @@
-name: GitHub Actions Demo
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-on: [push]
+name: On Push Run
+
+on: push
+
 env:
-  DEVOPS_DIR: ../kolleactions
+  DEVOPS_DIR: kolleactions
+
 jobs:
-  Explore-GitHub-Actions:
+  hello-world:
+    name: Hello world
     runs-on: ubuntu-latest
     steps:
-      - run: python ${{ env.DEVOPS_DIR }}/hw.py
+    - name: Check-out devops repository
+      uses: actions/checkout@v2
+      with:
+        repository: sbpost/kolleactions
+        token: ${{ secrets.GITHUB_TOKEN }}
+        path: ${{ env.DEVOPS_DIR }}
+
+    - name: Hello World
+      run: python ${{ env.DEVOPS_DIR }}/hw.py
+      shell: sh
